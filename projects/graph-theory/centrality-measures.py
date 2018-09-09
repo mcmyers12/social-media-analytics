@@ -1,10 +1,6 @@
 from igraph import *
 import math
 
-def nCr(n,r):
-    f = math.factorial
-    return f(n) / f(r) / f(n-r)
-
 
 def createGraphA():
     g = Graph()
@@ -101,6 +97,11 @@ def setColors(g):
 def setVertexSize(g):
     numVertices = g.vcount()
     g.vs['size'] = [x * 200 for x in getBetweenness(g, numVertices)]
+
+
+def nCr(n, r):
+    f = math.factorial
+    return f(n) / f(r) / f(n - r)
 
 
 def displayNetwork(g):
