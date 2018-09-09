@@ -1,0 +1,27 @@
+Degree Centrality: 
+	[0.75, 0.75, 0.5, 0.5, 0.5]
+Agents with Max Degree Centrality: 
+	[1, 2]
+
+Betweenness: 
+	[0.25, 0.25, 0.083, 0.083, 0.0]
+Agents with Max Betweenness: 
+	[1, 2]
+
+Closeness: 
+	[0.8, 0.8, 0.667, 0.667, 0.667]
+Agents with Max Closeness: 
+	[1, 2]
+
+Density: 
+	0.6
+
+Diameter: 
+	2
+
+Adjacency Matrix: 
+0 1 1 0 1
+1 0 0 1 1
+1 0 0 1 0
+0 1 1 0 0
+1 1 0 0 0

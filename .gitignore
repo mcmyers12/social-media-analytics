@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Added by me
+.DS_Store
+projects/.idea/*
+projects/youtube-channel/client_secret.json
+
 # C extensions
 *.so
 
