@@ -1,0 +1,6 @@
+Output:
+
+Training set accuracy: 0.986301362514
+Test set accuracy: 0.655172407627
+precision: 0.7619047619047619
+recall: 0.16666666666666669
