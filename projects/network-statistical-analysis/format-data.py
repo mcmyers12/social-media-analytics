@@ -1,4 +1,5 @@
 from pprint import pprint as pp
+import csv
 
 def createAdjacencyMatrix(nodes, edgesFile, matrixFile):
     matrix = [[0] + nodes]
@@ -38,17 +39,26 @@ def getFeatureNames(featureNamesFile):
     with open(featureNamesFile, 'r') as f:
         for line in f:
             splitLine = line.split()
-            featureName = splitLine[1].replace('anonymized', '') + splitLine[-1]
+            featureName = splitLine[1].replace('anonymized', '').replace(';', '') + splitLine[-1]
             featureNames.append(featureName)
     
     return featureNames
+    
+
+def matrixToCsv(matrix, outputFile):
+    with open(outputFile ,'w+') as csvOut:
+        csvWriter = csv.writer(csvOut,delimiter=',')
+        csvWriter.writerows(matrix)
 
 
 def main():
     nodes = getNodes('0.feat')
-    matrix = createAdjacencyMatrix(nodes, '0.edges', 'adjacency-matrix.txt')
+    adjacencyMatrix = createAdjacencyMatrix(nodes, '0.edges', 'adjacency-matrix.txt')
     featureNames = getFeatureNames('0.featnames')
-    getFeatures(nodes, featureNames, '0.feat')
+    features = getFeatures(nodes, featureNames, '0.feat')
+    pp(featureNames)
+    matrixToCsv(adjacencyMatrix, 'facebook-adj.csv')
+    matrixToCsv(features, 'facebook-attr.csv')
         
     '''for row in matrix:
         print(row)'''
