@@ -1,13 +1,17 @@
 import nltk
-from pprint import pprint as pp
 from enum import Enum
+import random
 
 '''Sentiment analysis classifier using the Sentiment 140 corpus and NLTK.
    Tested using content from Reddit. 
    Data from http://help.sentiment140.com/for-students
    Code adapted from https://www.laurentluce.com/posts/twitter-sentiment-analysis-using-python-and-nltk/'''
 
-'''Limitations: doesn't remove stop words well, improve filtering'''
+'''Limitations of the classifier: 
+    --Basic techniques for remove stop words could be improved
+    --Does not take into account punctuation
+    --Performs very slowly, therefore is only running on a portion of the available training data
+    --Could be improved by ignoring irrelevant tokens such as URLs or tagged individuals'''
 
 
 
@@ -45,6 +49,8 @@ def get_word_features(wordlist):
 
 
 training_tweets = get_tweets('training-and-test-data/training.1600000.processed.noemoticon.csv')
+random.shuffle(training_tweets)
+training_tweets = training_tweets[0:10000]
 test_tweets = get_tweets('training-and-test-data/testdata.manual.2009.06.14.csv')
 word_features = get_word_features(get_words_in_tweets(training_tweets))
 
@@ -60,7 +66,7 @@ def extract_features(document):
 def build_sentiment_classifier():
     training_set = nltk.classify.apply_features(extract_features, training_tweets)
     classifier = nltk.NaiveBayesClassifier.train(training_set)
-    print 'classifier accuracy on test set:'
+    print 'classifier accuracy on Sentiment 140 test set:'
     test_set = nltk.classify.apply_features(extract_features, test_tweets)
     print '\t' + str(nltk.classify.accuracy(classifier, test_set)) + '\n\n'
     reddit_sentiment_classification(classifier)
