@@ -6,6 +6,7 @@ __pycache__/
 # Added by me
 .DS_Store
 projects/.idea/*
+projects/*/.idea/*
 projects/youtube-channel/client_secret.json
 
 # C extensions
