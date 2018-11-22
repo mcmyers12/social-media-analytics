@@ -8,6 +8,7 @@ __pycache__/
 projects/.idea/*
 projects/*/.idea/*
 projects/youtube-channel/client_secret.json
+.idea/*
 
 # C extensions
 *.so
