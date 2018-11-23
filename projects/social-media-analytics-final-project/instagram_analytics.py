@@ -56,7 +56,6 @@ if __name__ == '__main__':
     network = {
         'acro': {'tagColor': 'purple', 'ownerColor': 'lavender'},
         'acroyoga': {'tagColor': 'magenta', 'ownerColor': 'lightpink'},
-        'ballet': {'tagColor': 'black', 'ownerColor': 'gray'},
         'partneryoga': {'tagColor': 'blue', 'ownerColor': 'lightblue'}
     }
     build_network(network)

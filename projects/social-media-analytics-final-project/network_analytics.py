@@ -18,7 +18,12 @@ class NetworkAnalytics:
         pp(color)'''
 
         for label in vertex_labels:
-            self.g.add_vertex(label, color=color) #, label=label)
+            try:
+                self.get_vertex_by_name(label)
+                self.get_vertex_by_name(label)['color'] = 'gray'
+            except ValueError:
+                self.g.add_vertex(label, color=color) #, label=label)
+
 
     '''Adds vertex to the graph with label
        Param: strings representing vertex label'''
