@@ -1,7 +1,5 @@
-"""find active discussions on a particular hashtag"""
+"""TODO"""
 from igraph import *
-from pprint import pprint as pp
-import math
 
 
 class NetworkAnalytics:
@@ -17,16 +15,16 @@ class NetworkAnalytics:
         self.num_vertices = len(vertex_labels)
 
         for label in vertex_labels:
-            self.g.add_vertex(label, label=label)
+            self.g.add_vertex(label) #, label=label)
+
+    '''Adds vertex to the graph with label
+       Param: strings representing vertex label'''
+    def add_vertex(self, vertex_label):
+        self.g.add_vertex(vertex_label)
 
     '''Adds an edge to the graph given two vertex names'''
     def add_edge(self, name1, name2):
         self.g.add_edge(name1, name2)
-
-    '''Populates graph vertices and edges'''
-    def populate_graph(self, vertex_labels):
-        self.add_vertices(vertex_labels)
-        # self.add_edges()
 
     '''Displays a plot of the graph'''
     def display_graph(self):
@@ -41,18 +39,18 @@ class NetworkAnalytics:
         return self.g.vs.find(index)
 
     # --------Graph analytics methods-------- #
-    '''Compute the betweenness centrality score of all agents in the graph
+    '''Computes the betweenness centrality score of all agents in the graph
        Returns a list of betweenness centralities'''
     def get_betweenness(self):
         denominator = ((self.num_vertices - 1.0) * (self.num_vertices - 2.0)) / 2.0
         return [round(x / denominator, 3) for x in g.betweenness()]
 
-    '''Compute the closeness centrality score of all agents in the graph
+    '''Computes the closeness centrality score of all agents in the graph
        Returns a list of closeness centralities'''
     def get_closeness(self):
         return [round(x, 3) for x in self.g.closeness()]
 
-    '''Calculate degree centrality for each agent in the graph
+    '''Computes degree centrality for each agent in the graph
        Returns a list of degree centralities'''
     def calculate_degree_centralities(self):
         return [x / (self.num_vertices - 1.0) for x in self.g.degree()]
@@ -65,12 +63,7 @@ class NetworkAnalytics:
     def get_diameter(self):
         return self.g.diameter()
 
+    def display_graph(self):
+        plot(self.g)
 
-if __name__ == '__main__':
-    na = NetworkAnalytics()
-    na.populate_graph(['miranda', 'danny', 'rick', 'rebecca', 'oscar', 'ely'])
-    na.add_edge('miranda', 'danny')
-    na.add_edge('miranda', 'rick')
-    print na.get_vertex_by_index(0)
-    #print na.g
 
