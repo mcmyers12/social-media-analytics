@@ -42,24 +42,22 @@ def add_hashtag_connections(na, tag, tag_color, vertices, vertices_color):
         na.add_edge(tag, name)
 
 
-def do_stuff():
+def build_network(network):
     na = NetworkAnalytics()
 
-    acro_tag = 'acro'
-    acro_owners = get_hashtag_post_owners(acro_tag)
-    add_hashtag_connections(na, acro_tag, 'purple', acro_owners, 'lavender')
-
-    acroyoga_tag = 'acroyoga'
-    acroyoga_owners = get_hashtag_post_owners(acroyoga_tag)
-    add_hashtag_connections(na, acroyoga_tag, 'blue', acroyoga_owners, 'lightblue')
-
-    partneryoga_tag = 'partneryoga'
-    partneryoga_owners = get_hashtag_post_owners(partneryoga_tag)
-    add_hashtag_connections(na, partneryoga_tag, 'magenta', partneryoga_owners, 'lightpink')
+    for tag in network:
+        owners = get_hashtag_post_owners(tag)
+        add_hashtag_connections(na, tag, network[tag]['tagColor'], owners, network[tag]['ownerColor'])
 
     na.display_graph()
 
 
 if __name__ == '__main__':
-    do_stuff()
+    network = {
+        'acro': {'tagColor': 'purple', 'ownerColor': 'lavender'},
+        'acroyoga': {'tagColor': 'magenta', 'ownerColor': 'lightpink'},
+        'ballet': {'tagColor': 'black', 'ownerColor': 'gray'},
+        'partneryoga': {'tagColor': 'blue', 'ownerColor': 'lightblue'}
+    }
+    build_network(network)
 
