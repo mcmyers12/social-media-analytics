@@ -11,16 +11,19 @@ class NetworkAnalytics:
     # --------Graph access, manipulation, and display-------- #
     '''Adds vertices to the graph with labels
        Param: list of strings representing vertex labels'''
-    def add_vertices(self, vertex_labels):
+    def add_vertices(self, vertex_labels, color):
         self.num_vertices = len(vertex_labels)
 
+        '''self.g.vs['color'] = [color] * self.num_vertices
+        pp(color)'''
+
         for label in vertex_labels:
-            self.g.add_vertex(label) #, label=label)
+            self.g.add_vertex(label, color=color) #, label=label)
 
     '''Adds vertex to the graph with label
        Param: strings representing vertex label'''
-    def add_vertex(self, vertex_label):
-        self.g.add_vertex(vertex_label)
+    def add_vertex(self, vertex_label, color):
+        self.g.add_vertex(vertex_label, label=vertex_label, color=color)
 
     '''Adds an edge to the graph given two vertex names'''
     def add_edge(self, name1, name2):

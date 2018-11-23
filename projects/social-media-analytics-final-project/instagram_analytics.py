@@ -34,13 +34,12 @@ def get_common_elements(list_a, list_b):
         print("No common elements")
 
 
-def add_hashtag_connections(na, tag, vertices):
-    na.add_vertex(tag)
-    na.add_vertices(vertices)
+def add_hashtag_connections(na, tag, tag_color, vertices, vertices_color):
+    na.add_vertex(tag, tag_color)
+    na.add_vertices(vertices, vertices_color)
 
     for name in vertices:
         na.add_edge(tag, name)
-
 
 
 def do_stuff():
@@ -48,28 +47,19 @@ def do_stuff():
 
     acro_tag = 'acro'
     acro_owners = get_hashtag_post_owners(acro_tag)
-    add_hashtag_connections(na, acro_tag, acro_owners)
+    add_hashtag_connections(na, acro_tag, 'purple', acro_owners, 'lavender')
 
     acroyoga_tag = 'acroyoga'
     acroyoga_owners = get_hashtag_post_owners(acroyoga_tag)
-    add_hashtag_connections(na, acroyoga_tag, acroyoga_owners)
+    add_hashtag_connections(na, acroyoga_tag, 'blue', acroyoga_owners, 'lightblue')
 
     partneryoga_tag = 'partneryoga'
     partneryoga_owners = get_hashtag_post_owners(partneryoga_tag)
-    add_hashtag_connections(na, partneryoga_tag, partneryoga_owners)
+    add_hashtag_connections(na, partneryoga_tag, 'magenta', partneryoga_owners, 'lightpink')
 
     na.display_graph()
 
+
 if __name__ == '__main__':
-    '''na = NetworkAnalytics()
-    na.populate_graph(['miranda', 'danny', 'rick', 'rebecca', 'oscar', 'ely'])
-    na.add_edge('miranda', 'danny')
-    na.add_edge('miranda', 'rick')
-    print na.g'''
-
     do_stuff()
-
-    '''acroyoga_owners = get_hashtag_post_owners('acroyoga')
-    print not set(acro_owners).isdisjoint(acroyoga_owners)
-    print get_common_elements(acro_owners, acroyoga_owners)'''
 
