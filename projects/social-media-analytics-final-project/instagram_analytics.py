@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """find active discussions on a particular hashtag"""
 
 from network_analytics import NetworkAnalytics
@@ -6,57 +8,55 @@ import urllib2
 import json
 
 
-def get_hashtag_post_owners(htag):
-    owners = []
-    search_url = 'https://www.instagram.com/explore/tags/' + htag + '/?__a=1'
+class InstagramAnalytics:
 
-    #search_url = 'https://api.instagram.com/tags/snowy/media/recent'
+    def __init__(self):
+        self.na = NetworkAnalytics()
 
-    contents = urllib2.urlopen(search_url).read()
-    results = json.loads(contents)
-    edges = results['graphql']['hashtag']['edge_hashtag_to_media']['edges']
+    '''Gets the post owners of a given hashtag'''
+    def get_hashtag_post_owners(self, htag):
+        owners = []
+        search_url = 'https://www.instagram.com/explore/tags/' + htag + '/?__a=1'
+        # search_url = 'https://api.instagram.com/tags/snowy/media/recent'
 
-    for edge in edges:
-        node = edge['node']
-        owner_id = node['owner']['id']
-        if owner_id not in owners:
-            owners.append(owner_id)
+        contents = urllib2.urlopen(search_url).read()
+        results = json.loads(contents)
+        edges = results['graphql']['hashtag']['edge_hashtag_to_media']['edges']
+        for edge in edges:
+            node = edge['node']
+            owner_id = node['owner']['id']
+            if owner_id not in owners:
+                owners.append(owner_id)
 
-    return owners
+        return owners
 
+    '''Adds hashtag and owners as vertices
+       Adds an edge between each owner and corresponding hashtag'''
+    def add_hashtag_connections(self, tag, tag_color, vertices, vertices_color):
+        self.na.add_vertex(tag, tag_color)
+        self.na.add_vertices(vertices, vertices_color)
 
-def get_common_elements(list_a, list_b):
-    a_set = set(list_a)
-    b_set = set(list_b)
-    if a_set & b_set:
-        print(a_set & b_set)
-    else:
-        print("No common elements")
+        for name in vertices:
+            self.na.add_edge(tag, name)
 
-
-def add_hashtag_connections(na, tag, tag_color, vertices, vertices_color):
-    na.add_vertex(tag, tag_color)
-    na.add_vertices(vertices, vertices_color)
-
-    for name in vertices:
-        na.add_edge(tag, name)
-
-
-def build_network(network):
-    na = NetworkAnalytics()
-
-    for tag in network:
-        owners = get_hashtag_post_owners(tag)
-        add_hashtag_connections(na, tag, network[tag]['tagColor'], owners, network[tag]['ownerColor'])
-
-    na.display_graph()
+    '''Given a dict formatted as follows, build a graph
+       net = {
+        'acro': {'tagColor': 'purple', 'ownerColor': 'lavender'},
+        'partneryoga': {'tagColor': 'blue', 'ownerColor': 'lightblue'}}'''
+    def build_network(self, network):
+        for tag in network:
+            owners = self.get_hashtag_post_owners(tag)
+            self.add_hashtag_connections(tag, network[tag]['tagColor'], owners, network[tag]['ownerColor'])
 
 
 if __name__ == '__main__':
-    network = {
-        'acro': {'tagColor': 'purple', 'ownerColor': 'lavender'},
-        'acroyoga': {'tagColor': 'magenta', 'ownerColor': 'lightpink'},
-        'partneryoga': {'tagColor': 'blue', 'ownerColor': 'lightblue'}
+    net = {
+        'ポアント': {'tagColor': 'purple', 'ownerColor': 'lavender'},  # pointe
+        'ダンス': {'tagColor': 'magenta', 'ownerColor': 'lightpink'},  # dance
+        'バレエ': {'tagColor': 'blue', 'ownerColor': 'lightblue'}  # ballet
     }
-    build_network(network)
+
+    ia = InstagramAnalytics()
+    ia.build_network(net)
+    ia.na.display_graph()
 

@@ -24,7 +24,6 @@ class NetworkAnalytics:
             except ValueError:
                 self.g.add_vertex(label, color=color) #, label=label)
 
-
     '''Adds vertex to the graph with label
        Param: strings representing vertex label'''
     def add_vertex(self, vertex_label, color):
@@ -46,12 +45,16 @@ class NetworkAnalytics:
     def get_vertex_by_index(self, index):
         return self.g.vs.find(index)
 
+    '''Displays the graph'''
+    def display_graph(self):
+        plot(self.g)
+
     # --------Graph analytics methods-------- #
     '''Computes the betweenness centrality score of all agents in the graph
        Returns a list of betweenness centralities'''
     def get_betweenness(self):
         denominator = ((self.num_vertices - 1.0) * (self.num_vertices - 2.0)) / 2.0
-        return [round(x / denominator, 3) for x in g.betweenness()]
+        return [round(x / denominator, 3) for x in self.g.betweenness()]
 
     '''Computes the closeness centrality score of all agents in the graph
        Returns a list of closeness centralities'''
@@ -71,7 +74,13 @@ class NetworkAnalytics:
     def get_diameter(self):
         return self.g.diameter()
 
-    def display_graph(self):
-        plot(self.g)
+    '''Returns the common elements between two lists'''
+    @staticmethod
+    def get_common_elements(list_a, list_b):
+        a_set = set(list_a)
+        b_set = set(list_b)
+        if a_set & b_set:
+            return a_set & b_set
+        return []
 
 
